@@ -1,0 +1,110 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dr. José Daniel V5</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f8fd;font-family:Arial,sans-serif;color:#17324d}.app{max-width:520px;margin:auto;min-height:100vh;background:#fff;box-shadow:0 0 24px #cbdced}header{padding:22px 20px;color:#fff;background:linear-gradient(135deg,#0877d1,#35a9ff);border-radius:0 0 24px 24px}.logo{font-size:25px;font-weight:800}.sub{font-size:13px;opacity:.9;margin-top:5px}main{padding:20px}.screen{display:none}.active{display:block}.card{border:1px solid #dceeff;border-radius:18px;padding:17px;margin:12px 0;box-shadow:0 5px 16px #e7f1f9}h1{font-size:25px}h2{font-size:20px}p{line-height:1.5;color:#526b80}.small{font-size:12px;color:#71879a}.btn{width:100%;border:0;border-radius:14px;padding:15px;margin:7px 0;background:#0877d1;color:white;font-weight:700}.btn.light{background:#e9f5ff;color:#0867b7}.btn.gray{background:#eef3f7;color:#486174}.age-grid,.menu{display:grid;grid-template-columns:1fr 1fr;gap:10px}.age{padding:18px 8px;border:2px solid #d9edff;border-radius:16px;background:#f8fcff;color:#1769a8;font-weight:700}.notice{background:#eef8ff;border-left:4px solid #0877d1;padding:12px;border-radius:10px;font-size:13px}.progress{height:9px;background:#e6f1fa;border-radius:20px;overflow:hidden;margin:14px 0}.bar{height:100%;background:#1591ed;width:0}.choice{display:block;width:100%;text-align:left;padding:14px;margin:8px 0;background:#fff;border:2px solid #dcecf8;border-radius:13px}.choice.selected{border-color:#0877d1;background:#eaf6ff}.nav{display:flex;gap:8px}.nav .btn{flex:1}.result{padding:20px;border-radius:20px;text-align:center;background:#eef8ff}.score{font-size:38px;font-weight:800;color:#0877d1}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{background:#e8f5ff;color:#126da8;padding:7px 10px;border-radius:30px;font-size:12px}footer{text-align:center;padding:20px;font-size:11px;color:#789}
+</style><style>
+.audio-access{display:none;align-items:center;gap:8px;margin:12px 0;padding:10px 12px;border-radius:12px;background:#eef6ff;color:#1264d8;border:1px solid #cfe3ff}
+.audio-access button{border:0;border-radius:10px;padding:9px 12px;background:#1264d8;color:#fff;font-weight:700}
+</style><style>
+#audioAccess{display:block;margin:16px 0;padding:14px;border-radius:16px;background:#eef6ff;border:2px solid #bcdcff;text-align:center}
+#audioAccess .audio-title{font-weight:800;color:#1264d8;margin-bottom:8px}
+#audioAccess button{border:0;border-radius:12px;padding:11px 14px;margin:4px;background:#1264d8;color:white;font-weight:700;font-size:15px}
+#audioAccess button.stop{background:#64748b}
+#audioAccess small{display:block;margin-top:7px;color:#52657a}
+</style></head><body><div class="app"><header><div class="logo">🧠 Dr. José Daniel</div><div class="sub">Sinais de atenção, organização e impulsividade</div></header><main>
+<section id="home" class="screen active"><div class="card"><h1>Conheça melhor seus sinais</h1><p>Um protótipo educativo para observar sinais relacionados a atenção, organização e impulsividade.</p><div class="notice"><b>Importante:</b> o Dr. José Daniel não diagnostica TDAH. Os resultados desta V5 são demonstrativos.</div></div><button class="btn" onclick="show('age')">Começar avaliação</button><div class="menu"><button class="btn light" onclick="show('about')">🧠 Sobre TDAH</button><button class="btn light" onclick="show('tips')">💡 Dicas</button><button class="btn light" onclick="historyPage()">📈 Histórico</button><button class="btn light" onclick="show('privacy')">🔒 Privacidade</button></div></section>
+<section id="age" class="screen"><h1>Qual é a faixa etária?</h1><p>Escolha a idade da pessoa que responderá.</p><div class="age-grid"><button class="age" onclick="ageSet('Até 7 anos')">👶<br>Até 7 anos</button><button class="age" onclick="ageSet('8–12 anos')">🧒<br>8–12 anos</button><button class="age" onclick="ageSet('13–17 anos')">🧑<br>13–17 anos</button><button class="age" onclick="ageSet('18+ anos')">👨‍🦱<br>18+ anos</button></div><button class="btn gray" onclick="show('home')">Voltar</button></section>
+<section id="guardian" class="screen"><h2>👨‍👩‍👧 Participação do responsável</h2><p>Para crianças, o ideal é que um responsável participe e ajude a interpretar as respostas.</p><div class="notice">Este botão não comprova identidade ou autorização. Uma versão pública precisa de um fluxo adequado de proteção de menores.</div><button class="btn" onclick="show('intro')">Continuar</button><button class="btn gray" onclick="show('age')">Voltar</button></section>
+<section id="intro" class="screen"><h2>Antes de começar</h2><div class="card"><p>Responda pensando na rotina habitual.</p><ul><li>Não existem respostas certas ou erradas.</li><li>Considere situações frequentes.</li><li>O resultado não é diagnóstico.</li></ul></div><button class="btn" onclick="start()">Começar perguntas</button><button class="btn gray" onclick="show('age')">Voltar</button></section>
+<section id="quiz" class="screen"><div class="small" id="ageLabel"></div><div class="progress"><div class="bar" id="bar"></div></div><div class="small" id="num"></div><h2 id="q"></h2><div id="opts"></div><div class="nav"><button class="btn gray" id="back" onclick="prev()">Voltar</button><button class="btn" onclick="next()" id="next">Próxima</button></div></section>
+<section id="result" class="screen"><h2>Seu resultado</h2><div class="result"><div class="score" id="score"></div><h2 id="title"></h2><p id="text"></p></div><div class="card"><h2>Áreas observadas</h2><div class="chips" id="chips"></div></div><div class="notice">Este resultado é demonstrativo. Se as dificuldades forem persistentes e atrapalharem a rotina, converse com um profissional qualificado.</div><button class="btn" onclick="show('nextsteps')">O que fazer agora?</button><button class="btn light" onclick="show('age')">Fazer outro teste</button><button class="btn gray" onclick="show('home')">Início</button></section>
+<section id="nextsteps" class="screen"><h2>O que fazer agora?</h2><div class="card"><h2>1. Observe a rotina</h2><p>Anote quando as dificuldades aparecem e se acontecem em mais de um ambiente.</p></div><div class="card"><h2>2. Converse com alguém</h2><p>Para menores, envolva um responsável. Quando apropriado, converse também com profissionais da escola.</p></div><div class="card"><h2>3. Procure avaliação</h2><p>Uma avaliação profissional pode investigar TDAH e outras possíveis causas das dificuldades.</p></div><button class="btn" onclick="show('tips')">Ver dicas</button><button class="btn gray" onclick="show('result')">Voltar</button></section>
+<section id="about" class="screen"><h2>🧠 O que é TDAH?</h2><div class="card"><p>TDAH é um transtorno do neurodesenvolvimento que pode envolver dificuldades persistentes de atenção, hiperatividade e/ou impulsividade.</p></div><div class="card"><p>Ter alguns desses sinais não significa automaticamente ter TDAH. Sono, estresse, ansiedade, aprendizagem e outros fatores também podem afetar a atenção.</p></div><button class="btn gray" onclick="show('home')">Voltar</button></section>
+<section id="tips" class="screen"><h2>💡 Dicas práticas</h2><div class="card"><h2>🎯 Uma tarefa por vez</h2><p>Divida tarefas grandes em pequenos passos.</p></div><div class="card"><h2>⏰ Lembretes</h2><p>Use alarmes, listas e calendário.</p></div><div class="card"><h2>📚 Organização</h2><p>Defina lugares para materiais importantes.</p></div><div class="card"><h2>😴 Rotina</h2><p>Horários regulares podem ajudar na organização do dia.</p></div><button class="btn gray" onclick="show('home')">Voltar</button></section>
+<section id="privacy" class="screen"><h2>🔒 Privacidade</h2><div class="card"><p>Esta V5 é um protótipo local. O histórico fica somente neste aparelho usando armazenamento do navegador.</p><p>Em uma versão real, dados de saúde e dados de menores precisam de proteção, segurança, transparência e revisão jurídica apropriada.</p></div><div class="notice">Não use dados pessoais reais durante testes.</div><button class="btn gray" onclick="show('home')">Voltar</button></section>
+<section id="history" class="screen"><h2>📈 Histórico</h2><div id="hist"></div><button class="btn light" onclick="clearHist()">Limpar histórico</button><button class="btn gray" onclick="show('home')">Voltar</button></section>
+</main><footer>Dr. José Daniel V5 • Protótipo educativo • Não substitui avaliação profissional</footer></div>
+<script>
+const qs=[
+["Atenção","Com que frequência tem dificuldade para manter a atenção em uma atividade?"],
+["Distração","Com que frequência se distrai facilmente com coisas ao redor?"],
+["Memória","Com que frequência esquece tarefas, compromissos ou objetos importantes?"],
+["Organização","Com que frequência tem dificuldade para organizar tarefas ou materiais?"],
+["Início de tarefas","Com que frequência adia o começo de tarefas que precisa fazer?"],
+["Conversas","Com que frequência perde partes de uma conversa porque a atenção se dispersa?"],
+["Instruções","Com que frequência tem dificuldade para seguir instruções até o fim?"],
+["Objetos","Com que frequência passa tempo procurando coisas que guardou?"],
+["Agitação","Com que frequência sente necessidade de se mexer ou fazer alguma coisa?"],
+["Espera","Com que frequência tem dificuldade para esperar sua vez?"],
+["Interrupção","Com que frequência interrompe antes de a outra pessoa terminar?"],
+["Impulsividade","Com que frequência age rapidamente e só depois pensa nas consequências?"],
+["Sentar","Com que frequência é difícil permanecer sentado quando necessário?"],
+["Várias tarefas","Com que frequência começa várias coisas e deixa algumas sem terminar?"],
+["Tempo","Com que frequência perde a noção do tempo?"],
+["Rotina","Com que frequência precisa de muitos lembretes para tarefas da rotina?"],
+["Foco","Com que frequência tem dificuldade para terminar uma atividade que começou?"],
+["Impacto","Com que frequência essas dificuldades atrapalham escola, trabalho, casa ou relacionamentos?"]];
+const opts=["Nunca","Raramente","Às vezes","Frequentemente","Muito frequentemente"];let age="",i=0,a=[];
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");scrollTo(0,0)}
+function ageSet(x){age=x;show(x==="Até 7 anos"||x==="8–12 anos"?"guardian":"intro")}
+function start(){i=0;a=Array(qs.length).fill(null);render();show("quiz")}
+function render(){document.getElementById("ageLabel").textContent=age;document.getElementById("num").textContent=`Pergunta ${i+1} de ${qs.length}`;document.getElementById("q").textContent=qs[i][1];document.getElementById("bar").style.width=((i+1)/qs.length*100)+"%";let box=document.getElementById("opts");box.innerHTML="";opts.forEach((x,n)=>{let b=document.createElement("button");b.className="choice"+(a[i]===n?" selected":"");b.textContent=x;b.onclick=()=>{a[i]=n;render()};box.appendChild(b)});document.getElementById("back").style.visibility=i?"visible":"hidden";document.getElementById("next").textContent=i===qs.length-1?"Ver resultado":"Próxima"}
+function next(){if(a[i]===null){alert("Escolha uma resposta para continuar.");return}if(i<qs.length-1){i++;render()}else finish()}
+function prev(){if(i){i--;render()}}
+function finish(){let total=a.reduce((s,x)=>s+x,0),title,text;if(total<20){title="Poucos sinais identificados";text="Poucos sinais foram marcados neste protótipo. Isso não exclui dificuldades."}else if(total<45){title="Alguns sinais identificados";text="Alguns sinais foram marcados e podem merecer observação na rotina."}else{title="Vários sinais identificados";text="Vários sinais foram marcados. Isso não significa diagnóstico."}document.getElementById("score").textContent=total;document.getElementById("title").textContent=title;document.getElementById("text").textContent=text;let u=[...new Set(qs.filter((q,n)=>(a[n]||0)>=2).map(q=>q[0]))];document.getElementById("chips").innerHTML=(u.length?u:["Nenhuma área destacada"]).map(x=>`<span class="chip">${x}</span>`).join("");let h=JSON.parse(localStorage.getItem("drBarbosaV5")||"[]");h.unshift({d:new Date().toLocaleString("pt-BR"),age,total,title});localStorage.setItem("drBarbosaV5",JSON.stringify(h.slice(0,10)));show("result")}
+function historyPage(){let h=JSON.parse(localStorage.getItem("drBarbosaV5")||"[]");document.getElementById("hist").innerHTML=h.length?h.map(x=>`<div class="card"><b>${x.title}</b><br><span class="small">${x.d} • ${x.age} • pontuação demonstrativa: ${x.total}</span></div>`).join(""):'<div class="card"><p>Nenhum teste salvo neste aparelho.</p></div>';show("history")}
+function clearHist(){localStorage.removeItem("drBarbosaV5");historyPage()}
+</script><div id="audioAccess" aria-live="polite">
+<div class="audio-title">🔊 Ajuda por áudio</div>
+<button id="speakBtn" type="button">🔊 Ouvir esta tela</button>
+<button id="stopSpeakBtn" class="stop" type="button">⏹ Parar</button>
+<small>Disponível para 7–8 anos e 60 anos ou mais.</small>
+</div>
+<script>
+(function(){
+  const box=document.getElementById('audioAccess');
+  const speak=document.getElementById('speakBtn');
+  const stop=document.getElementById('stopSpeakBtn');
+  if(!box) return;
+
+  function getSelectedAge(){
+    const checked=document.querySelector('input[type="radio"]:checked');
+    if(checked){
+      const s=((checked.value||'')+' '+(checked.parentElement?.innerText||'')).toLowerCase();
+      const m=s.match(/(?:^|\D)(\d{1,2})(?:\D|$)/);
+      if(m) return Number(m[1]);
+    }
+    const t=document.body.innerText||'';
+    const matches=[...t.matchAll(/(?:idade|anos)\D{0,10}(\d{1,2})/gi)];
+    return matches.length ? Number(matches[matches.length-1][1]) : null;
+  }
+
+  function eligible(){
+    const a=getSelectedAge();
+    return a===7 || a===8 || a>=60;
+  }
+
+  function update(){
+    // Keep visible while no age is selected so the tester can immediately see it.
+    box.style.display=eligible() || getSelectedAge()===null ? 'block' : 'none';
+  }
+
+  speak.addEventListener('click', function(){
+    if(!('speechSynthesis' in window)){
+      alert('Seu navegador não oferece leitura de voz.');
+      return;
+    }
+    speechSynthesis.cancel();
+    const ignored=['Ajuda por áudio','Ouvir esta tela','Parar'];
+    const texts=[...document.querySelectorAll('h1,h2,h3,h4,p,label,button')]
+      .map(e=>(e.innerText||'').trim())
+      .filter(t=>t && !ignored.includes(t));
+    const u=new SpeechSynthesisUtterance(texts.slice(-12).join('. '));
+    u.lang='pt-BR'; u.rate=0.88; u.pitch=1;
+    speechSynthesis.speak(u);
+  });
+
+  stop.addEventListener('click',()=>('speechSynthesis' in window)&&speechSynthesis.cancel());
+  update();
+  new MutationObserver(update).observe(document.body,{subtree:true,childList:true,characterData:true});
+})();
+</script></body></html>
